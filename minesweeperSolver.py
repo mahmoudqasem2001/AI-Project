@@ -8,13 +8,13 @@ import time
 root = Tk()
 
 btn = []  # Array storing all the buttons
-numOfBombs = 40  # Number of bombs
+numOfBombs = 30  # Number of bombs
 numOfRows = 20  # Number of rows
 numOfCols = 20  # Number of columns
 # countIterations=0
 
 initialPause = 2000
-waitTime = 1000
+waitTime = 3000
 
 
 restartCount = 0
@@ -180,10 +180,9 @@ def spiralGuess(X, Y):
     dy = -1
     for i in range(max(X, Y)**2):
         if (-X/2 < x <= X/2) and (-Y/2 < y <= Y/2):
-            # print (math.ceil(x+X/2),math.ceil(y+Y/2))
+            #print (math.ceil(x+X/2),math.ceil(y+Y/2))
             xtemp = math.ceil(x+X/2)-1
             ytemp = math.ceil(y+Y/2)-1
-            # plt.scatter(math.ceil(x+X/2),math.ceil(y+Y/2))
             indextemp = ((ytemp)*numOfCols) + xtemp
             btnBox = btn[indextemp]
 
@@ -200,6 +199,7 @@ def spiralGuess(X, Y):
         if x == y or (x < 0 and x == -y) or (x > 0 and x == 1-y):
             dx, dy = -dy, dx
         x, y = x+dx, y+dy
+        #print(str(x)+ " + "+ str(y))
 
 
 def showAllBombs():
@@ -393,9 +393,10 @@ def myDfsFun(x, y, index):
         # Update cell number
         # Check for bomb in current cell
         if bombCheck(index) == 1:
-            btnBox.config(text="💣")
+            btnBox.config(text="b")
             btnBox.config(fg="black")
             print("You Lose")
+            root.mainloop()
         else:
             btnBox.config(text=str(nearbyBombCount))
             btnBox.config(relief="flat")
@@ -403,6 +404,7 @@ def myDfsFun(x, y, index):
             # Check to see if you've won
             if numOfClickedTiles == (numOfRows*numOfCols)-numOfBombs:
                 print("You Win ")
+                root.mainloop()
 
                 root.after(3*waitTime, restartSweep)
 
